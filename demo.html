@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body {
+			width: 1000px;
+			height: 800px;
+			margin: 0px;
+			background: url(./img/2.gif) no-repeat;
+			background-size: cover; 
+		}
+		#MC {
+			position: absolute;
+			bottom: 20px;
+			left: 66px;
+			width: 400px;
+			height: 580px;
+		}
+		#DC {
+			position: absolute;
+			bottom: 20px;
+			left: 700px;
+			width: 369px;
+			height: 583px;
+		}
+	
+	</style>
+	<embed src="./2.mp3" hidden="true"
+	autostart="true" loop="loop">
+</head>
+<body>
+	<audio autoplay="autoplay" height="100" width="100" loop="loop" hidden="true">
+		<!-- 注：-1 一首播放完结束   loop  单曲循环 -->
+	
+	  <source src="./2.mp3" type="audio/mp3" />
+	
+	</audio> 
+	<div id="site">
+	<img src="./img/4.gif" id="MC" alt="" person-name="yagami">
+	<img src="./img/5.gif" id="DC" alt="" person-name1="first">
+</div>
+
+
+	<script type="text/javascript">
+
+		/*
+			键盘事件  console.log(ev)敲击信息
+			人物指令：
+			人物动作：
+
+			当添加人物时添加 *1  2 3 4 5 6
+
+		*/
+		var oImg = document.getElementById("MC");
+		var oimg1 = document.getElementById("DC");
+
+
+		// 人物1图片位置
+		var player = new Player(oImg);
+		// 获取图片
+		function Player(imgNode) {
+			var imgNode = imgNode;
+			this.getImg = function() {
+				return imgNode;
+			}
+			console.log(imgNode);
+		};
+
+		// 人物2图片位置
+		var player1 = new Player(oimg1)
+		function Player1(imgNode1) {
+			var imgNode1 = imgNode1;
+			this.getImg = function() {
+				return imgNode1;
+
+			}
+			console.log(img);
+		};
+		//  *1
+
+		
+
+
+
+
+		// 多个人物
+		var skill = {
+			// 人物1
+			"yagami":{
+				"advance":function() {
+					if (player.getImg().src="./img/4.gif"){
+					player.getImg().style="position:absolute;left:500px;transition:5s;"
+				}
+				},
+				"retreat":function() {
+					if (player.getImg().src="./img/4.gif"){
+					player.getImg().style="position:absolute;left:0px;transition:5s;"
+				}
+				},
+				"boom":function() {
+					if (player.getImg().src="./img/4.gif"){
+					player.getImg().src="./img/4.gif";
+				}
+				},
+				"tiao":function() {
+					if (player.getImg().src="./img/4.gif"){
+					player.getImg().style="position:absolute;bottom:185px;transition:5s;"
+				}
+			   },
+			   "xia":function() {
+					if (player.getImg().src="./img/4.gif"){
+					player.getImg().style="position:absolute;bottom:0px;transition:5s;"
+				}
+				},
+			},
+			// 人物2
+			"first":{
+					"qian":function() {
+					if (player1.getImg().src="./img/5.gif"){
+					player1.getImg().style="position:absolute;left:500px;transition:5s;"
+				}
+				},
+				"hou":function() {
+					if (player1.getImg().src="./img/5.gif"){
+					player1.getImg().style="position:absolute;left:700px;transition:5s;"
+				}
+				},
+				"shang":function() {
+					if (player1.getImg().src="./img/5.gif"){
+					player1.getImg().style="position:absolute;bottom:200px;transition:5s;"
+				}
+				},
+			   "xia1":function() {
+					if (player1.getImg().src="./img/5.gif"){
+					player1.getImg().style="position:absolute;bottom:0px;transition:5s;"
+				}
+				},
+				}
+				// *2
+}
+
+
+		
+		// 定义两个人物的名称
+		var playName = player.getImg().getAttribute("person-name");
+		var playName1 = player1.getImg().getAttribute("person-name1");
+		// *3
+		
+
+	
+		// 人物键盘指令表
+		var commands = {
+			// 人物1
+			"100":"advance",//d前进
+			"97":"retreat",//a后退
+			"111":"boom",//o爆气
+			"119":"tiao",//w跳
+			"115":"xia",//s下
+			// 人物2
+			"49":"qian",//前进1
+			"50":"hou",//后退2
+			"51":"shang",//跳3
+			"52":"xia1",//下4
+			// *4
+		};
+		
+
+		// 人物动作
+		var makeCommand = function(objCommand,state) {
+			return function() {
+				// 判断输入值
+				if (typeof objCommand[state] == "function"){
+					objCommand[state]();
+				}
+			}
+		};
+
+
+		// 键盘按键值
+		document.onkeypress = function(ev) {
+			var keyCode = ev.keyCode,//保存键码值\
+			// 人物1
+			command = makeCommand(skill[playName],commands[keyCode]);//生成指令
+			// 人物2
+			command1 = makeCommand(skill[playName1],commands[keyCode]);
+			// *5
+			
+			command();
+			command1();
+			
+			// 当指令执行完毕 恢复原图
+			// 人物1
+			this.onkeyup = function() {
+				player.getImg().src="./img/4.gif";
+			}
+			// 人物2
+			this.onkeyup = function() {
+				player1.getImg().src="./img/5.gif";
+			}
+			// *6
+		}
+	</script>
+</body>
+</html>
